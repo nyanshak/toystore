@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
  
 <title>Toy Store Registration</title>
-<link rel="stylesheet" href="css/styles.css" type="text/css" />
+<link rel="stylesheet" href="/css/styles.css" type="text/css" />
 </head>  
 <body>  
 <div id="main">
@@ -29,7 +29,7 @@ if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['em
 		$registerquery = $mysqli->query("INSERT INTO User (Username, Email, Name, BillingAddress, ShippingAddress, Password) VALUES('" . $username . "', '" . $email . "', '" . $name . "', '" . $billingaddress . "', '" . $shippingaddress . "', '" . $password . "')");
 		if($registerquery) {
 			echo "<h1>Success</h1>";
-			echo "<p>Your account was successfully created. Please <a href=\"index.php\">click here to login</a>.</p>";
+			echo "<p>Your account was successfully created. Please <a href=\"/index.php\">click here to login</a>.</p>";
 		} else {
 			echo "<h1>Error</h1>";
 			echo "<p>Sorry, your registration failed. Please go back and try again.</p>";	
