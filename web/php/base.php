@@ -14,13 +14,14 @@
 	$dbname = $db_creds["dbname"];
 
 	// Create connection
-	$conn = new mysqli($servername, $username, $password, $dbname);
+	$mysqli = new mysqli($servername, $username, $password, $dbname);
 
 	// Check connection
-	if ($conn->connect_error) {
+	if ($mysqli->connect_error) {
 		$response->success = false;
 		$response->error = "Something went wrong trying to connect to the database";
         die(json_encode($response));
 	}
+	session_start();
 
 ?>

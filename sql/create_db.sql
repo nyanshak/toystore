@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `toystore`.`User` (
   `Name` VARCHAR(45) NULL,
   `BillingAddress` VARCHAR(45) NULL,
   `ShippingAddress` VARCHAR(45) NULL,
-  `Password` VARCHAR(45) NULL,
+  `Password` VARCHAR(255) NULL,
   PRIMARY KEY (`Id`))
 ENGINE = InnoDB;
 

@@ -3,10 +3,10 @@
 
 	// this is an example of how to connect to db and perform select
 	header('Content-Type: application/json');
-	include 'database_connect.php';
+	include 'base.php';
 
 	$query = "SELECT * FROM Users;";
-	$values = $conn->query($query);
+	$values = $mysqli->query($query);
 
 
 	if ($values->num_rows > 0) {
@@ -27,6 +27,6 @@
 	$data["success"] = true;
 	echo json_encode($data);
 
-	$conn->close();
+	$mysqli->close();
 ?>  
 
