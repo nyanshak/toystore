@@ -11,8 +11,7 @@
 <div id="main">
 <?php
 
-if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name']) && !empty($_POST['billingaddress']) && !empty($_POST['shippingaddress'])) {
-	$username = $mysqli->escape_string($_POST['username']);
+if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name']) && !empty($_POST['billingaddress']) && !empty($_POST['shippingaddress'])) {
 	$email = $mysqli->escape_string($_POST['email']);
 	$name = $mysqli->escape_string($_POST['name']);
 	$billingaddress = $mysqli->escape_string($_POST['billingaddress']);
@@ -20,13 +19,13 @@ if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['em
 	$password = password_hash($mysqli->escape_string($_POST['password']), PASSWORD_DEFAULT);
 	
 	 
-	$checkusername = $mysqli->query("SELECT * FROM User WHERE Username = '" . $username . "' || Email ='" . $email . "'");
+	$checkemail = $mysqli->query("SELECT * FROM User WHERE Email = '" . $email . "'");
 	  
-	if(!$checkusername || $checkusername->num_rows >= 1) {
+	if(!$checkemail || $checkemail->num_rows >= 1) {
 		echo "<h1>Error</h1>";
-		echo "<p>Sorry, that username or email is taken. Please go back and try again.</p>";
+		echo "<p>Sorry, there is already a user under that email address. Please go back and try again.</p>";
 	} else {
-		$registerquery = $mysqli->query("INSERT INTO User (Username, Email, Name, BillingAddress, ShippingAddress, Password) VALUES('" . $username . "', '" . $email . "', '" . $name . "', '" . $billingaddress . "', '" . $shippingaddress . "', '" . $password . "')");
+		$registerquery = $mysqli->query("INSERT INTO User (Email, Name, BillingAddress, ShippingAddress, Password) VALUES('" . $email . "', '" . $name . "', '" . $billingaddress . "', '" . $shippingaddress . "', '" . $password . "')");
 		if($registerquery) {
 			echo "<h1>Success</h1>";
 			echo "<p>Your account was successfully created. Please <a href=\"/index.php\">click here to login</a>.</p>";
@@ -35,23 +34,50 @@ if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['em
 			echo "<p>Sorry, your registration failed. Please go back and try again.</p>";	
 		}	   
 	}
+} else if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
+	?>
+	<h1>Error</h1>
+	<p>You are already logged in. Please <a href="/">click here to return to the main page</a>.</p>
+
+<?php
 } else {
 	?>
 	 
-   <h1>Register</h1>
 	 
-   <p>Please enter your details below to register.</p>
 	 
-	<form method="post" action="register.php" name="registerform" id="registerform">
-	<fieldset>
-		<label for="username">Username</label><input type="text" name="username" id="username" /><br />
-		<label for="name">Name</label><input type="text" name="name" id="name" /><br />
-		<label for="billingaddress">Billing Address</label><input type="text" name="billingaddress" id="billingaddress" /><br />
-		<label for="shippingaddress">Shipping Address</label><input type="text" name="shippingaddress" id="shippingaddress" /><br />
-		<label for="email">Email Address</label><input type="text" name="email" id="email" /><br />
-		<label for="password">Password</label><input type="password" name="password" id="password" /><br />
-		<input type="submit" name="register" id="register" value="Register" />
-	</fieldset>
+	<form method="post" action="" name="registerform" id="registerform" class="myForm">
+		<h1>Register
+			<span>Please fill the fields below to register.</span></h1>
+		
+		<label>
+			<span>Name</span>
+			<input type="text" name="name" id="name" />
+		</label>
+
+		<label>
+			<span>Email</span>
+			<input type="email" name="email" id="email" />
+		</label>
+
+		<label>
+			<span>Billing Address</span>
+			<input type="text" name="billingaddress" id="billingaddress" />
+		</label>
+
+		<label>
+			<span>Shipping Address</span>
+			<input type="text" name="shippingaddress" id="shippingaddress" />
+		</label>
+
+		<label>
+			<span>Password</span>
+			<input type="password" name="password" id="password" />
+		</label>
+
+		<label>
+			<span>&nbsp;</span>
+			<input type="submit" name="register" id="register" value="Register" />
+		</label>
 	</form>
 	 
 	<?php
