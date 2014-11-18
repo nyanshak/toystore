@@ -36,7 +36,12 @@ if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name'
 	}
 } else if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 	?>
-	<h1>Error</h1>
+	<script type="text/javascript">
+		window.location = "/";
+	</script>
+
+	<!-- Used if JS is disabled -->
+	<h1>That's strange</h1>
 	<p>You are already logged in. Please <a href="/">click here to return to the main page</a>.</p>
 
 <?php

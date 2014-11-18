@@ -74,7 +74,7 @@ if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 
 		<label>
 			<span>Password</span>
-			<input type="text" name="password" />
+			<input type="password" name="password" />
 		</label>
 
 		<label>
