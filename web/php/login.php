@@ -1,4 +1,4 @@
-<?php include "php/base.php"; ?>
+<?php include "base.php"; ?>
 
 <!doctype html>
 <html>
@@ -6,19 +6,19 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Toy Store logon</title>
 		<link rel="stylesheet" href="/css/styles.css" type="text/css" />
-
 <?php
-if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username'])) {
-	 ?>
-	</head>
+if (!empty($_SESSION['Url'])) {
+	$url = $_SESSION['Url'];
+} else {
+	$url = "/";
+}
 
-	<body>
-		<div id="main">
- 
-			<h1>Member Area</h1>
-			<p>Thanks for logging in! You are <code><?=$_SESSION['Username']?></code> and your email address is <code><?=$_SESSION['EmailAddress']?></code>.</p>
-		
-	 <?php
+if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username'])) {
+	echo "<meta http-equiv='refresh' content=\"0;$url\" />";
+	echo "</head>\n<body>\n<div id=\"main\"";
+	echo "<h1>Success</h1>";
+	echo "<p>Redirecting to main page.</p>";
+
 } elseif (!empty($_POST['username']) && !empty($_POST['password'])) {
 	$username = $mysqli->escape_string($_POST['username']);
 	$password = $mysqli->escape_string($_POST['password']);
@@ -39,45 +39,56 @@ if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Username'])) {
 			$_SESSION['BillingAddress'] = $billAddr;
 			$_SESSION['LoggedIn'] = 1;
 			
-			echo "<meta http-equiv='refresh' content=\"0;/index.php\" />";
+			echo "<meta http-equiv='refresh' content=\"0;$url\" />";
 			echo "</head>\n<body>\n<div id=\"main\"";
 			echo "<h1>Success</h1>";
-			echo "<p>We are now redirecting you to the member area.</p>";
+			echo "<p>We are now redirecting you to $url.</p>";
 			
 		} else {
 			echo "</head>\n<body>\n<div id=\"main\"";
 			echo "<h1>Error</h1>";
-			echo "<p>Sorry, an account with that email address and password combination could not be found. Please <a href=\"index.php\">click here to try again</a>.</p>";
+			echo "<p>Sorry, an account with that email address and password combination could not be found. Please <a href=\"/php/login.php\">click here to try again</a>.</p>";
 		}
 		
 	} else {
 		echo "</head>\n<body>\n<div id=\"main\"";
 		echo "<h1>Error</h1>";
-		echo "<p>Sorry, no user exists with that username. Please <a href=\"index.php\">click here to try again</a>.</p>";
+		echo "<p>Sorry, no user exists with that username. Please <a href=\"/\">click here to try again</a>.</p>";
 	}
 } else {
 	?>
 	 
+
+
 	</head>
 
 	<body>
 	<div id="main">
-	<h1>Member Login</h1>
 	 
-	<p>Thanks for visiting! Please either login below, or <a href="php/register.php">click here to register</a>.</p>
-	 
-	<form method="post" action="index.php" name="loginform" id="loginform">
-	<fieldset>
-		<label for="username">Username</label><input type="text" name="username" id="username" /><br />
-		<label for="password">Password</label><input type="password" name="password" id="password" /><br />
-		<input type="submit" name="login" id="login" value="Login" />
-	</fieldset>
+	<form method="post" action="" name="loginform" id="loginform" class="myForm">
+		<h1>Login</h1>
+		<label>
+			<span>Username</span>
+			<input type="text" name="username" />
+		</label>
+
+		<label>
+			<span>Password</span>
+			<input type="text" name="password" />
+		</label>
+
+		<label>
+			<span>&nbsp;</span>
+			<input type="submit" value="Send" />
+		</label>
+	
+		<p>Don't have an account? <a href="/php/register.php">Click here to register</a>.</p>
 	</form>
 	 
 	<?php
 }
 ?>
- 
-	</div>
+
+</div> 
 </body>
 </html>

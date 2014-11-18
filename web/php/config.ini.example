@@ -7,7 +7,3 @@ username = "username"		; database username with proper permissions on db
 password = "password"		; probably want to have a better password than "password", don't you think?
 dbname = "toystore"			; if you use the create scripts in the sql directory, this should be the correct schema
 
-
-
-
-

@@ -6,6 +6,7 @@
 	if (!array_key_exists("database_credentials", $config)) {
 		die("database credentials not set; please configure 'config.ini'");
 	}
+
 	$db_creds = $config["database_credentials"];
 
 	$servername = $db_creds["servername"];
