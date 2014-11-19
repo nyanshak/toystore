@@ -7,17 +7,17 @@
 
 	unset($params);
 	if (!empty($_POST['name'])) {
-		$params[] = " Name = '" . $mysqli->escape_string($_POST['name']) . "'";
+		$params[] = "Name = '" . $mysqli->escape_string($_POST['name']) . "'";
 	}
 	if (!empty($_POST['description'])) {
-		$params[] = " Description like '%" . $mysqli->escape_string($_POST['name']) . "%'";
+		$params[] = "Description like '%" . $mysqli->escape_string($_POST['name']) . "%'";
 	}
 
 	// Note: this does not check that values are actually numeric or in proper order
 	if (!empty($_POST['pricelower']) && !empty($_POST['priceupper'])) {
 		$lowerBound = "'" . $mysqli->escape_string($_POST['pricelower']) . "'";
 		$upperBound = "'" . $mysqli->escape_string($_POST['priceupper']) . "'";
-		$params[] = " Price BETWEEN " . $lowerBound . " AND " . $priceUpper;
+		$params[] = "Price BETWEEN " . $lowerBound . " AND " . $priceUpper;
 	}
 
 	if (!empty($_POST['category'])) {
@@ -44,8 +44,8 @@
 		}
 	}
 
-	$data["products"] = (array)$products;
 	$data["success"] = true;
+	$data["products"] = (array)$products;
 	echo json_encode($data);
 
 	$mysqli->close();
