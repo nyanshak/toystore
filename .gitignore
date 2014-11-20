@@ -1,2 +1,5 @@
 robots.txt
 humans.txt
+*~
+*.swp
+*.swo

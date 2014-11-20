@@ -1,4 +1,3 @@
-
 <?php
 
 	// this is an example of how to connect to db and perform select
@@ -6,48 +5,73 @@
 	include 'base.php';
 
 	unset($params);
-	if (!empty($_POST['name'])) {
-		$params[] = "Name = '" . $mysqli->escape_string($_POST['name']) . "'";
-	}
-	if (!empty($_POST['description'])) {
-		$params[] = "Description like '%" . $mysqli->escape_string($_POST['name']) . "%'";
+
+	$_POST = array_map('trim', $_POST);
+
+	if (!empty($_POST['pid']) || $_POST['id'] === '0') {
+		$params[] = "P.Id = '" . $mysqli->escape_string($_POST['pid']) . "'";
 	}
 
-	// Note: this does not check that values are actually numeric or in proper order
-	if (!empty($_POST['pricelower']) && !empty($_POST['priceupper'])) {
-		$lowerBound = "'" . $mysqli->escape_string($_POST['pricelower']) . "'";
-		$upperBound = "'" . $mysqli->escape_string($_POST['priceupper']) . "'";
-		$params[] = "Price BETWEEN " . $lowerBound . " AND " . $priceUpper;
+	if (!empty($_POST['name']) || $_POST['name'] === '0') {
+		$params[] = "Name LIKE '%" . $mysqli->escape_string($_POST['name']) . "%'";
 	}
 
-	if (!empty($_POST['category'])) {
-		// TODO: logic to deal with categories
+	if (!empty($_POST['description']) || $_POST['description'] === '0')  {
+		$params[] = "P.Description like '%" . $mysqli->escape_string($_POST['description']) . "%'";
 	}
 
-	$query = "SELECT * FROM Product";
+	$lowerBound = $_POST['pricelower'];
+	$upperBound = $_POST['priceupper'];
+
+	$decimalRegex = "/^\d+(\.\d+)?$/";
+	if (preg_match($decimalRegex, $lowerBound) && preg_match($decimalRegex, $upperBound)) {
+		if ($lowerBound > $upperBound) { // user got bounds mixed
+			$temp = $lowerBound;
+			$lowerBound = $upperBound;
+			$upperBound = $temp;
+			unset($temp);
+		}
+		$params[] = "P.Price BETWEEN " . $lowerBound . " AND " . $upperBound;
+	}
+
+	$query = "SELECT P.Id as PId, P.Name as PName, Inventory, Price, Picture, Description FROM Product as P";
 	if (!empty($params)) {
 		$query .= ' WHERE ' . implode(' AND ', $params);
 	}
 
+	if (!empty($_POST['category'])) {
+		$query .= " JOIN ProductToCategory as PTC ON P.Id = PTC.ProductId JOIN Category as C ON PTC.CategoryId = C.Id WHERE C.Name LIKE '%" . $mysqli->escape_string($_POST['category']) . "%'";
+	}
+
 	$values = $mysqli->query($query);
 
+	$foundArr = array();
 
 	if ($values->num_rows > 0) {
 		$i = 0;
 		while($row = $values->fetch_assoc()) {
-			$products[$i]["Id"] = $row["Id"];
-			$products[$i]["Name"] = $row["Name"];
-			$products[$i]["Price"] = $row["Price"];
-			$products[$i]["Picture"] = $row["Picture"];
-			$products[$i]["Description"] = $row["Description"];
-			$i++;
+			$id = $row["PId"];
+
+			if(!array_key_exists($id, $foundArr)) {
+				$products[$i]["Id"] = $id;
+				$products[$i]["Name"] = $row["PName"];
+				$products[$i]["Description"] = $row["Description"];
+				$products[$i]["Price"] = $row["Price"];
+				$products[$i]["Inventory"] = $row["Inventory"];
+				$products[$i]["Picture"] = $row["Picture"];
+				$val = $i;
+				$foundArr[$id] = $val;
+				$i++;
+			} else {
+				$val = $foundArr[$id];
+			}
 		}
 	}
 
 	$data["success"] = true;
+
 	$data["products"] = (array)$products;
 	echo json_encode($data);
 
 	$mysqli->close();
 ?>  
-

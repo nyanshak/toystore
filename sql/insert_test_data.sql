@@ -42,7 +42,7 @@ Insert Into `Category` (`Id`, `Name`) Values
 -- Product: Id, Name, Description, Price, Inventory, Picture (URL)
 
 Insert Into `Product` (`Id`, `Name`, `Description`, `Price`, `Inventory`, `Picture`) Values
-	(1, 'Generic Skateboard', '21" Starting Skateboard, perfect for beginners', 36.98, 4, 'https://farm3.staticflickr.com/2145/1877962834_7afe9e1dd1.jpg');
+	(1, 'Generic Skateboard', '21-inch starting skateboard, perfect for beginners', 36.98, 4, 'https://farm3.staticflickr.com/2145/1877962834_7afe9e1dd1.jpg');
 
 -- Order: Id, OrderDate, Total, Status, UserId
 
