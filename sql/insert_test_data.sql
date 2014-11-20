@@ -6,7 +6,7 @@ source create_db.sql;
 -- User: Id, Email, Name, BillingAddress, ShippingAddress, Password
 
 Insert Into `User` (`Id`, `Email`, `Name`, `BillingAddress`, `ShippingAddress`, `Password`) Values
-	(1, 'test1@example.com', 'test1name', 'billAddr', 'shipAddr', '$2y$10$oHaz41sa17M6GUBE6V.JR.XcaRcqC58w7u3RH2RKWahuUcUzLkL'); -- This corresponds to password 'test1pass'
+	(1, 'test1@example.com', 'test1name', 'billAddr', 'shipAddr', '$2y$10$hXJq6ZBCUs5MieL4rMvIxufK7Yd220uWT/.KTV5HyUPupUl/O638a'); -- This corresponds to password 'test1pass'
 
 -- Category: Id, Name
 
