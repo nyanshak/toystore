@@ -1,4 +1,11 @@
 <?php
+
+	// prevent direct access to this page
+	if(!defined('INCL_BASE_CONST')) {
+		header('Location: /php/error.php');
+		exit;
+	}
+
 	// include this file to load db connection
 
 	$config = parse_ini_file("config.ini", true);

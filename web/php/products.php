@@ -2,6 +2,8 @@
 
 	// this is an example of how to connect to db and perform select
 	header('Content-Type: application/json');
+
+	define('INCL_BASE_CONST', true);
 	include 'base.php';
 
 	unset($params);

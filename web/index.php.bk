@@ -1,4 +1,6 @@
 <?php
+	define('INCL_HEADER_CONST', TRUE);
+	include('/php/header.php');
 	$_SESSION['Url'] = "/";
 ?>
 
@@ -17,13 +19,29 @@
 	<body>
 
 		<div id="Wrap">
+		<nav class="clearfix">
+		<ul class="clearfix">
+			<li><a href="/">Home</a></li>
 <?php
-	define('INCL_HEADER_CONST', TRUE);
-	ob_start();
-	include('php/header.php');
-	$result = ob_get_clean();
-	echo $result;
+
+if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
+	 ?>
+			<li><a href="/php/account.php">Your Account</a></li>
+			<li><a href="/php/logout.php">Sign Out</a></li>
+ 
+	 <?php
+} else {
+	
+	?>
+			<!-- Guest user links -->
+			<li><a href="/php/login.php">Sign in</a></li>
+			<li><a href="/php/register.php">Register</a></li>
+	<?php
+}
 ?>
+		</ul>
+		<a href="#" id="pull">Menu</a>
+		</nav>
 
 		<div id="LeftSidebar">
 

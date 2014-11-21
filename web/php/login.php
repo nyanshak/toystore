@@ -1,10 +1,13 @@
-<?php include "base.php"; ?>
+<?php
+	define('INCL_BASE_CONST', TRUE);
+	include "base.php";
+?>
 
 <!doctype html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Toy Store logon</title>
+		<title>Toy Store</title>
 		<link rel="stylesheet" href="/css/styles.css" type="text/css" />
 <?php
 if (!empty($_SESSION['Url'])) {
@@ -89,6 +92,6 @@ if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 }
 ?>
 
-</div> 
-</body>
+	</div> 
+	</body>
 </html>

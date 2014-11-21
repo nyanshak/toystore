@@ -1,4 +1,7 @@
-<?php include "base.php"; ?>
+<?php
+	define('INCL_BASE_CONST', true);
+	include "base.php";
+?>
 
 <!doctype html>
 <html>
@@ -83,6 +86,7 @@ if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name'
 			<span>&nbsp;</span>
 			<input type="submit" name="register" id="register" value="Register" />
 		</label>
+		<span>Already have an account? <a href="/php/login.php">Click here to login</a>.</span>
 	</form>
 	 
 	<?php
