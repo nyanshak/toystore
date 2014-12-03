@@ -5,15 +5,16 @@
 		exit;
 	}
 
-	define('INCL_BASE_CONST', TRUE);
-	include "base.php";
+	if (!defined('INCL_BASE_CONST')) {
+		define('INCL_BASE_CONST', TRUE);
+		include "base.php";
+	}
 	
 ?>
 		<nav class="clearfix">
 		<ul class="clearfix">
 			<li><a href="/">Home</a></li>
 <?php
-
 if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 	 ?>
 			<li><a href="/php/account.php">Your Account</a></li>
@@ -29,7 +30,7 @@ if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 	<?php
 }
 ?>
-		</ul>
-		<a href="#" id="pull">Menu</a>
+			<li><a href="/php/browse.php">Browse Toys</a></li>
+			</ul>
+			<a href="#" id="pull">Menu</a>
 		</nav>
-

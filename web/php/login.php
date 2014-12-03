@@ -7,8 +7,12 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<title>Toy Store</title>
 		<link rel="stylesheet" href="/css/styles.css" type="text/css" />
+		<link rel="stylesheet" href="/css/navbar.css" type="text/css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="/js/navbar.js"></script>
 <?php
 if (!empty($_SESSION['Url'])) {
 	$url = $_SESSION['Url'];
@@ -17,10 +21,15 @@ if (!empty($_SESSION['Url'])) {
 }
 
 if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
-	echo "<meta http-equiv='refresh' content=\"0;/\" />";
-	echo "</head>\n<body>\n<div id=\"main\"";
-	echo "<h1>Success</h1>";
-	echo "<p>Redirecting to main page.</p>";
+	?>
+	<meta http-equiv='refresh' content=\"0;/\" />
+	</head>
+
+	<body>
+	<div id="Wrap">
+	<h1>Success</h1>
+	<p>Redirecting to main page.</p>
+	<?php
 
 } elseif (!empty($_POST['email']) && !empty($_POST['password'])) {
 	$email = $mysqli->escape_string($_POST['email']);
@@ -42,34 +51,58 @@ if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 			$_SESSION['Name'] = $name;
 			$_SESSION['LoggedIn'] = 1;
 			
-			echo "<meta http-equiv='refresh' content=\"0;$url\" />";
-			echo "</head>\n<body>\n<div id=\"main\"";
-			echo "<h1>Success</h1>";
-			echo "<p>You will be redirected shortly.</p>";
+?>
+	<meta http-equiv='refresh' content="0;/" />
+	</head>
+	<body>
+	<div id="Wrap">
+	<h1>Success</h1>
+	<p>You will be redirected shortly.</p>
+<?php
 			
 		} else {
-			echo "</head>\n<body>\n<div id=\"main\"";
-			echo "<h1>Error</h1>";
-			echo "<p>Sorry, an account with that email address and password combination could not be found. Please <a href=\"/php/login.php\">click here to try again</a>.</p>";
+?>
+	</head>
+	<body>
+	<div id="Wrap">
+	<h1>Error</h1>
+	<p>Sorry, an account with that email address and password combination could not be found. Please <a href="/php/login.php">click here to try again</a>.</p>
+<?php
 		}
 		
 	} else {
-		echo "</head>\n<body>\n<div id=\"main\"";
-		echo "<h1>Error</h1>";
-		echo "<p>Sorry, no user exists under that email address. Please <a href=\"/php/login.php\">click here to try again</a>.</p>";
+?>
+	</head>
+	<body>
+	<div id="Wrap"
+	<h1>Error</h1>
+	<p>Sorry, no user exists under that email address. Please <a href="/php/login.php">click here to try again</a>.</p>
+<?php
 	}
 } else {
 	?>
-	 
-
 
 	</head>
 
 	<body>
-	<div id="main">
+	<div id="Wrap">
+<?php
+	define('INCL_HEADER_CONST', TRUE);
+	ob_start();
+	include('header.php');
+	$result = ob_get_clean();
+	echo $result;
+?>
+	<div id="LeftSidebar">
+		&nbsp;
+	</div>
 	 
+	<div id="MainContent">
 	<form method="post" action="" name="loginform" id="loginform" class="myForm">
-		<h1>Login</h1>
+		<h1>
+			Login
+			<span>Don't have an account? <a href="/php/register.php">Click here to register</a>.</span>
+		</h1>
 		<label>
 			<span>Email</span>
 			<input type="text" name="email" />
@@ -85,8 +118,12 @@ if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 			<input type="submit" value="Send" />
 		</label>
 	
-		<span>Don't have an account? <a href="/php/register.php">Click here to register</a>.</span>
 	</form>
+	</div>
+
+	<div id="RightSidebar">
+		&nbsp;
+	</div>
 	 
 	<?php
 }

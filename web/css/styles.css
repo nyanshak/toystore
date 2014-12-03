@@ -13,13 +13,18 @@ a {
 	text-decoration: none;
 }
 
+#Wrap {
+	overflow: hidden;
+}
+
 #LeftSidebar, #MainContent, #RightSidebar {
 	float: left;
 }
 
 #LeftSidebar, #RightSidebar {
-	background-color: #AA00FF;
 	width: 20%;
+	margin-bottom: -5000px;
+	padding-bottom: 5000px;
 }
 
 #MainContent {
@@ -47,13 +52,14 @@ a {
     margin-left:auto;
     margin-right:auto;
 
-
+/*
     max-width: 500px;
+*/
     background: #FFF;
     padding: 20px 30px 20px 30px;
     color: #888;
     text-shadow: 1px 1px 1px #FFF;
-    border:1px solid #DDD;
+    border: 1px solid #DDD;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -71,7 +77,12 @@ a {
 .myForm h1>span {
     display: block;
     font-size: 11px;
-	float:none;
+	float: none;
+	text-align: center;
+}
+
+.myForm>span {
+	text-align: center;
 }
 
 .myForm label {
@@ -111,8 +122,8 @@ a {
 .myForm select {
     background: #FFF;
     background: #FFF;
-    appearance:none;
-    -webkit-appearance:none; 
+    appearance: none;
+    -webkit-appearance: none; 
     -moz-appearance: none;
     text-indent: 0.01px;
     text-overflow: '';
@@ -122,7 +133,7 @@ a {
 }
 
 .myForm textarea {
-    height:100px;
+    height: 100px;
     padding: 5px 0px 0px 5px;
     width: 70%;
 }
@@ -146,11 +157,8 @@ img {
     height: 30%;
 }
 
-
-
-
 .order {
-    margin-left:200px;
+    margin-left: 200px;
     width: 1000px;
     font-size: 10pt;
     display: table-column-group;
@@ -169,7 +177,7 @@ img {
 .order td {
     padding: 0px 0px 10px 40px;
     align-items:flex-start;
-    display:block;
+    display: block;
     border-bottom: 2px solid #DADADA;
     margin: -10px -30px 30px -30px;
     color: #888;

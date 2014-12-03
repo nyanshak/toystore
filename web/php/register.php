@@ -1,17 +1,28 @@
-<?php
-	define('INCL_BASE_CONST', true);
-	include "base.php";
-?>
-
 <!doctype html>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
  
 <title>Toy Store Registration</title>
 <link rel="stylesheet" href="/css/styles.css" type="text/css" />
+<link rel="stylesheet" href="/css/navbar.css" type="text/css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="/js/navbar.js"></script>
 </head>  
 <body>  
-<div id="main">
+<div id="Wrap">
+
+<?php
+	define('INCL_HEADER_CONST', TRUE);
+	ob_start();
+	include('header.php');
+	$result = ob_get_clean();
+	echo $result;
+?>
+<div id="LeftSidebar">
+	&nbsp;
+</div>
+
+<div id="MainContent">
 <?php
 
 if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name']) && !empty($_POST['billingaddress']) && !empty($_POST['shippingaddress'])) {
@@ -51,12 +62,11 @@ if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name'
 } else {
 	?>
 	 
-	 
-	 
 	<form method="post" action="" name="registerform" id="registerform" class="myForm">
 		<h1>Register
-			<span>Please fill the fields below to register.</span></h1>
-		
+			<span>Please fill the fields below to register.</span>
+			<span>Already have an account? <a href="/php/login.php">Click here to login</a>.</span>
+		</h1>
 		<label>
 			<span>Name</span>
 			<input type="text" name="name" id="name" />
@@ -86,7 +96,6 @@ if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name'
 			<span>&nbsp;</span>
 			<input type="submit" name="register" id="register" value="Register" />
 		</label>
-		<span>Already have an account? <a href="/php/login.php">Click here to login</a>.</span>
 	</form>
 	 
 	<?php
@@ -94,7 +103,11 @@ if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name'
 	$mysqli->close();
 ?>
  
-</div>
+</div> <!-- end MainContent -->
+
+<div id="RightSidebar">
+</div> <!-- end RightSidebar -->
+</div> <!-- end Wrap -->
 </body>
 </html>
 
