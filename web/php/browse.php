@@ -15,6 +15,7 @@
     <body>
         <div id="Wrap">
             <?php
+				$_SESSION["Url"] = "/php/browse.php";
                 define('INCL_HEADER_CONST', TRUE);
                 ob_start();
                 include('header.php');

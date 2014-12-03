@@ -15,6 +15,7 @@
 		<div id="Wrap">
 		 
 			<?php
+			$_SESSION["Url"] = $_SERVER["REQUEST_URI"];
 			define('INCL_HEADER_CONST', TRUE);
 			ob_start();
 			include('header.php');

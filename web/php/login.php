@@ -23,7 +23,7 @@ if (!empty($_SESSION['Url'])) {
 
 if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 	?>
-	<meta http-equiv='refresh' content=\"0;/\" />
+	<meta http-equiv="refresh" content="0;/" />
 	</head>
 
 	<body>
@@ -53,7 +53,7 @@ if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 			$_SESSION['LoggedIn'] = 1;
 			
 ?>
-	<meta http-equiv='refresh' content="0;/" />
+	<meta http-equiv="refresh" content="0;/" />
 	</head>
 	<body>
 	<div id="Wrap">
