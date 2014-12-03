@@ -25,6 +25,35 @@ a {
 	width: 20%;
 	margin-bottom: -5000px;
 	padding-bottom: 5000px;
+	text-align: left;
+}
+
+#LeftSidebar {
+	border-right: 1px solid #DADADA;
+}
+
+#LeftSidebar h1 {
+    padding: 0px 0px 10px 40px;
+    border-bottom: 1px solid #DADADA;
+    margin: 10px 0px 0px -30px;
+	color: #455868;
+	text-align: center;
+	font-size: 1.1em;
+}
+
+#LeftSidebar>ul {
+	list-style-type: none;
+}
+
+#LeftSidebar>li {
+	width: 100%;
+}
+
+#LeftSidebar a {
+	width: 100%;
+	font: bold;
+	color: #455868;
+	padding: 2px 6px 2px 6px;
 }
 
 #MainContent {

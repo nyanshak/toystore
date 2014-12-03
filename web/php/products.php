@@ -63,6 +63,8 @@
 			}
 		}
 	}
-	echo json_encode($products);
+	$data["success"] = true;
+	$data["products"] = (array)$products;
+	echo json_encode($data);
 	$mysqli->close();
 ?>  

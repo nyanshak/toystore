@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="/css/navbar.css" type="text/css" />
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="/js/navbar.js"></script>
+		<script src="/js/leftsidebar.js"></script>
 	</head>
 
 	<body>

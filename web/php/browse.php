@@ -10,6 +10,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="/js/browse.js"></script>
         <script src="/js/navbar.js"></script>
+        <script src="/js/leftsidebar.js"></script>
     </head>
     <body>
         <div id="Wrap">

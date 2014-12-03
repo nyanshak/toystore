@@ -1,9 +1,35 @@
-$(function(){
-	for (i = new Date(2013, 0, 1).getFullYear(); i >= 2005; i--) {
-		$("#year").append($("<option />").val(i).html(i));
-	}
+$(function() {
+	fillLeftSidebar();	
+});
 
-	$("#target").submit(function(event) {
+function fillLeftSidebar() {
+	$.ajax({
+		url: "/php/categories.php",
+		type: "get",
+		dataType: "json",
+		success: function(data) {
+			if(!data["success"]) {
+				console.log(data["error"]);
+			} else {
+				console.log(data);
+				var content = "<h1>Categories</h1><ul>";
+				
+				for (var i = 0; i < data.categories.length; i++) {
+					var current = data.categories[i];
+					content += '<li><a href="/php/browse.php?category=' + current.Id + '">' + current.Name + '</a></li>';
+				}
+
+				content += "</ul>";
+				$("#LeftSidebar").html(content);
+			}
+		},
+		error: function(xhr) {
+			console.log("Oops! Something went wrong: " + xhr.status + " " + xhr.statusText);
+		}
+	});
+}
+/*
+	$("#LeftSidebar").submit(function(event) {
 		event.preventDefault();
 		var year = $("#year").val();
 		$("#PageHeader").html("Top Baby Names of " + year);
@@ -41,9 +67,9 @@ $(function(){
 				
 			},
 			error: function(xhr) {
-				alert("Oops! Something went wrong: " + xhr.status + " " + xhr.statusText);
 			}	
 		});
 	});
 
 });
+*/

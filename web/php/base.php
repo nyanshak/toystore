@@ -11,7 +11,9 @@
 	$config = parse_ini_file("config.ini", true);
 
 	if (!array_key_exists("database_credentials", $config)) {
-		die("database credentials not set; please configure 'config.ini'");
+		$response->success = false;
+		$response->error = "Database credentials not set; please configure 'config.ini'";
+        die(json_encode($response));
 	}
 
 	$db_creds = $config["database_credentials"];

@@ -34,6 +34,8 @@
 			}
 		}
 	}
-	echo json_encode($categories);
+	$data["success"] = true;
+	$data["categories"] = (array)$categories;
+	echo json_encode($data);
 	$mysqli->close();
 ?>  
