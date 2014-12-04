@@ -215,3 +215,36 @@ img {
     
 }
 
+.browse
+{
+    margin-left:50px;
+    width: 1400px;
+    font-size: 10pt;
+    border-width: 100%;
+    background: #FFF;
+    padding: 40px 40px 40px 40px;
+    color: #888;
+    text-shadow: 1px 1px 1px #FFF;
+    border:1px solid #DDD;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+   
+}
+
+.browse td
+{
+    padding: 0px 0px 10px 40px;
+    align-items:flex-start;
+    border-bottom: 2px solid #DADADA;
+    margin: -10px -30px 30px -30px;
+    color: #888;
+    text-align: center;
+    font-weight: bold;
+    
+}
+
+#browse {
+    width: 150%;
+    padding-left: 10%
+}

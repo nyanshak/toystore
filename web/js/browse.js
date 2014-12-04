@@ -4,33 +4,64 @@ $(function() {
         url: "/php/categories.php",
         type: "post",
         dataType: "json",
-        success: function(categories) {
-            $.each(categories, function(i, category) {
-                $categories.append("<option>" + category.Name + "</option>");
-            });
-            catsReady();
+        success: function(data) {
+            if (!data["success"]) {
+                console.log(data["error"]);
+            }
+            else {
+                console.log(data);
+                var categories = data["categories"];
+                $.each(categories, function(i, category) {
+                    $categories.append("<option>" + category.Name + "</option>");
+                });
+                catsReady();
+            }
         },
         error: function(xhr) {
-                alert("Oops! Something went wrong: " + xhr.status + " " + xhr.statusText);
+                console.log("Oops! Something went wrong: " + xhr.status + " " + xhr.statusText);
         }	
     });
 });
 
 function catsReady() {
     var $categories = $("#catfilter");
-    $categories.val("New");
-    getProducts({category: "New"});
+    var $minPrice = $("#minPrice");
+    var $maxPrice = $("#maxPrice");
+    var selectDefault = $("#selectDefault").text();
+    $categories.val(selectDefault);
+    getProducts({category: selectDefault});
     $categories.change(function() {
-        getProducts({category: $("#catfilter option:selected").text()});
+        getProducts({
+            category: $("#catfilter option:selected").text(),
+            pricelower: $minPrice.val(),
+            priceupper: $maxPrice.val()
+        });
+    });
+    $minPrice.change(function() {
+        getProducts({
+            category: $("#catfilter option:selected").text(),
+            pricelower: $minPrice.val(),
+            priceupper: $maxPrice.val()
+        });
+    });
+    $maxPrice.change(function() {
+        getProducts({
+            category: $("#catfilter option:selected").text(),
+            pricelower: $minPrice.val(),
+            priceupper: $maxPrice.val()
+        });
     });
     var $search = $("#search");
     var $searchBtn = $("#searchBtn");
     $searchBtn.click(function() {
         getProducts({
             name: $search.val(),
-            description: $search.val()
+            description: $search.val(),
+            or: true,
+            split: true 
         });
     });
+    $categories.val(selectDefault);
 }
 
 function getProducts(data) {
@@ -40,20 +71,27 @@ function getProducts(data) {
         data: data,
         type: "post",
         dataType: "json",
-        success: function(products) {
-            $products.empty();
-            $products.append('<tr class="border"><td>Category</td><td>Product</td><td>Description</td><td>Price</td><td>Inventory</td><td>Add to Cart</td></tr>');
-            $.each(products, function(i, product) {
-                $products.append('<tr><td class="hide">' + product.Id + "</td><td>" + product.Category + "</td><td><img src=" + product.Picture + " alt='Product Picture' /><br />" + product.Name + "</td><td>" 
-                        + product.Description + "</td><td>$" + product.Price + "</td><td>Qty: " + product.Inventory + '</td><td><button class="cartAdd">Add to Cart</button></td></tr>');
-            });
-            $(".hide").hide();
-            if ($products.length > 0) {
-                addToCart();
+        success: function(data) {
+            if (!data["success"]) {
+                console.log(data["error"]);
+            }
+            else {
+                console.log(data);
+                $products.empty();
+                $products.append('<tr class="border"><td>Category</td><td>Product</td><td>Description</td><td>Price</td><td>Inventory</td><td>Add to Cart</td></tr>');
+                var products = data["products"];
+                $.each(products, function(i, product) {
+                    $products.append('<tr><td class="hide">' + product.Id + "</td><td>" + product.Category + "</td><td><img src=" + product.Picture + " alt='Product Picture' /><br />" + product.Name + "</td><td>" 
+                            + product.Description + "</td><td>$" + product.Price + "</td><td>Qty: " + product.Inventory + '</td><td><button class="cartAdd">Add to Cart</button></td></tr>');
+                });
+                $(".hide").hide();
+                if ($products.length > 0) {
+                    addToCart();
+                }
             }
         },
         error: function(xhr) {
-                alert("Oops! Something went wrong: " + xhr.status + " " + xhr.statusText);
+                console.log("Oops! Something went wrong: " + xhr.status + " " + xhr.statusText);
         }	
     });
 }
@@ -86,12 +124,18 @@ function addToCart() {
                     },
                     type: "post",
                     dataType: "json",
-                    success: function(reply) {
+                    success: function(data) {
                         // Reply indicates if user is not logged in so we need to alert user to login
                         // We also need to check inventory and ensure it is > 0.
+                        if (data["reply"] === "success") {
+                            alert("Item successfully added to cart!");
+                        }
+                        else if (data["reply"] === "not_logged_in") {
+                            alert("You must login before adding to cart.");
+                        }
                     },
                     error: function(xhr) {
-                        alert("Oops! Something went wrong: " + xhr.status + " " + xhr.statusText);
+                        console.log("Oops! Something went wrong: " + xhr.status + " " + xhr.statusText);
                     }
                 });
             }

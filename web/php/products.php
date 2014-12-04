@@ -8,23 +8,25 @@
 		$params[] = "P.Id = '" . $mysqli->escape_string($_POST['pid']) . "'";
 	}
 	if (!empty($_POST['name']) || $_POST['name'] === '0') {
-		$params[] = "Name LIKE '%" . $mysqli->escape_string($_POST['name']) . "%'";
+            if (!empty($_POST['split'])) {
+                $_POST['name'] = preg_replace('/\s+/', '%', $_POST['name']);
+            }
+            $params[] = "Name LIKE '%" . $mysqli->escape_string($_POST['name']) . "%'";
 	}
 	if (!empty($_POST['description']) || $_POST['description'] === '0')  {
-		$params[] = "P.Description like '%" . $mysqli->escape_string($_POST['description']) . "%'";
+            if (!empty($_POST['split'])) {
+                $_POST['description'] = preg_replace('/\s+/', '%', $_POST['description']);
+            }
+            $params[] = "P.Description like '%" . $mysqli->escape_string($_POST['description']) . "%'";
 	}
 	$lowerBound = $_POST['pricelower'];
 	$upperBound = $_POST['priceupper'];
 	$decimalRegex = "/^\d+(\.\d+)?$/";
-
-	if (preg_match($decimalRegex, $lowerBound) && preg_match($decimalRegex, $upperBound)) {
-		if ($lowerBound > $upperBound) { // user got bounds mixed
-			$temp = $lowerBound;
-			$lowerBound = $upperBound;
-			$upperBound = $temp;
-			unset($temp);
-		}
-		$params[] = "P.Price BETWEEN " . $lowerBound . " AND " . $upperBound;
+	if (preg_match($decimalRegex, $lowerBound)) {
+		$params[] = "P.Price > " . $lowerBound;
+	}
+        if (preg_match($decimalRegex, $upperBound)) {
+		$params[] = "P.Price < " . $upperBound;
 	}
 	$select = "SELECT P.Id as PId, P.Name as PName, Inventory, Price, Picture, Description ";
 	$from = "FROM Product as P ";
@@ -38,7 +40,11 @@
 		if (empty($where)) {
 			$where = "WHERE ";
 		}
-		$where .= implode(' AND ', $params);
+                $combine = ' AND ';
+                if (!empty($_POST['or'])) {
+                    $combine = ' OR ';
+                }
+		$where .= implode($combine, $params);
 	}
 	$query = $select . $from . $where;
 	$values = $mysqli->query($query);

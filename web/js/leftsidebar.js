@@ -16,7 +16,7 @@ function fillLeftSidebar() {
 				
 				for (var i = 0; i < data.categories.length; i++) {
 					var current = data.categories[i];
-					content += '<li><a href="/php/browse.php?category=' + current.Id + '">' + current.Name + '</a></li>';
+					content += '<li><a href="/php/browse.php?category=' + current.Name + '">' + current.Name + '</a></li>';
 				}
 
 				content += "</ul>";
