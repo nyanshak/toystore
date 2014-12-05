@@ -27,40 +27,51 @@ function catsReady() {
     var $categories = $("#catfilter");
     var $minPrice = $("#minPrice");
     var $maxPrice = $("#maxPrice");
+    var $search = $("#search");
+    var $submitBtn = $("#submitBtn");
     var selectDefault = $("#selectDefault").text();
     $categories.val(selectDefault);
     getProducts({category: selectDefault});
     $categories.change(function() {
-        getProducts({
-            category: $("#catfilter option:selected").val(),
-            pricelower: $minPrice.val(),
-            priceupper: $maxPrice.val()
-        });
+        getProductsCaller($("#catfilter option:selected").val(), $minPrice.val(), 
+                $maxPrice.val(), $search.val());
     });
     $minPrice.change(function() {
-        getProducts({
-            category: $("#catfilter option:selected").val(),
-            pricelower: $minPrice.val(),
-            priceupper: $maxPrice.val()
-        });
+        getProductsCaller($("#catfilter option:selected").val(), $minPrice.val(), 
+                $maxPrice.val(), $search.val());
     });
     $maxPrice.change(function() {
-        getProducts({
-            category: $("#catfilter option:selected").val(),
-            pricelower: $minPrice.val(),
-            priceupper: $maxPrice.val()
-        });
+        getProductsCaller($("#catfilter option:selected").val(), $minPrice.val(), 
+                $maxPrice.val(), $search.val());
     });
-    var $search = $("#search");
-    var $searchBtn = $("#searchBtn");
-    $searchBtn.click(function() {
-        getProducts({
-            name: $search.val(),
-            description: $search.val(),
-            or: true,
-            split: true 
-        });
+    $search.change(function() {
+        getProductsCaller($("#catfilter option:selected").val(), $minPrice.val(), 
+                $maxPrice.val(), $search.val());
     });
+    $submitBtn.click(function() {
+        getProductsCaller($("#catfilter option:selected").val(), $minPrice.val(), 
+                $maxPrice.val(), $search.val());
+    });
+}
+
+function getProductsCaller(category, minPrice, maxPrice, keyword) {
+    if ((minPrice !== "" && !/^[0-9]+(.[0-9]+)?$/.test(minPrice)) || (maxPrice !== "" && !/^[0-9]+(.[0-9]+)?$/.test(maxPrice))) {
+        alert("Incorrect max/min price! Please enter a valid number.");
+    }
+    else if (minPrice !== "" && maxPrice !== "" && Number(minPrice) >= Number(maxPrice)) {
+        alert("Min price >= Max price!");
+    }
+    else {
+        getProducts({
+            category: category,
+            pricelower: minPrice,
+            priceupper: maxPrice,
+            name: keyword,
+            description: keyword,
+            keywords: true,
+            split: true
+        });
+    }
 }
 
 function getProducts(data) {
@@ -77,10 +88,10 @@ function getProducts(data) {
             else {
                 console.log(data);
                 $products.empty();
-                $products.append('<tr class="border"><td>Category</td><td>Product</td><td>Description</td><td>Price</td><td>Inventory</td><td>Add to Cart</td></tr>');
+                $products.append('<tr class="border"><td class="hide">Category</td><td>Product</td><td>Description</td><td>Price</td><td>Inventory</td><td>Add to Cart</td></tr>');
                 var products = data["products"];
                 $.each(products, function(i, product) {
-                    $products.append('<tr><td class="hide">' + product.Id + "</td><td>" + product.Category + "</td><td><img src=" + product.Picture + " alt='Product Picture' /><br />" + product.Name + "</td><td>" 
+                    $products.append('<tr><td class="hide">' + product.Id + '</td><td class="hide">' + product.Category + "</td><td><img src=" + product.Picture + " alt='Product Picture' /><br />" + product.Name + "</td><td>" 
                             + product.Description + "</td><td>$" + product.Price + "</td><td>Qty: " + product.Inventory + '</td><td><button class="cartAdd">Add to Cart</button></td></tr>');
                 });
                 $(".hide").hide();
@@ -105,12 +116,13 @@ function addToCart() {
             alert("This item is currently not in stock. Please check back later.");
         }
         else {
-            var $price = $qty.prev();
-            var price = $price.text().match(/\d+(\.\d+)?/);
-            var $productId = $price.prev().prev().prev().prev();
+            var $productId = $qty.prev().prev().prev().prev().prev();
             var productId = $productId.text();
             var desiredQty = prompt("Enter quantity to add to cart:");
-            if (qty - desiredQty < 0) {
+            if (!/^[1-9]+[0-9]*$/.test(desiredQty)) {
+                alert("Incorrect quantity! Please enter a valid number")
+            }
+            else if (qty - desiredQty < 0) {
                 alert("Quantity entered greater than available stock!");
             }
             else {
@@ -118,14 +130,12 @@ function addToCart() {
                     url: "/php/addtocart.php",
                     data: {
                         pid: productId,
-                        qty: desiredQty,
-                        price: price
+                        qty: desiredQty
                     },
                     type: "post",
                     dataType: "json",
                     success: function(data) {
                         // Reply indicates if user is not logged in so we need to alert user to login
-                        // We also need to check inventory and ensure it is > 0.
                         if (data["reply"] === "success") {
                             alert("Item successfully added to cart!");
                         }

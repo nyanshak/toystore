@@ -3,6 +3,8 @@
 	define('INCL_BASE_CONST', true);
 	include 'base.php';
 	unset($params);
+        unset($nameStr);
+        unset($descStr);
 	$_POST = array_map('trim', $_POST);
 	if (!empty($_POST['pid']) || $_POST['id'] === '0') {
 		$params[] = "P.Id = '" . $mysqli->escape_string($_POST['pid']) . "'";
@@ -11,22 +13,31 @@
             if (!empty($_POST['split'])) {
                 $_POST['name'] = preg_replace('/\s+/', '%', $_POST['name']);
             }
-            $params[] = "Name LIKE '%" . $mysqli->escape_string($_POST['name']) . "%'";
+            $nameStr = "P.Name LIKE '%" . $mysqli->escape_string($_POST['name']) . "%'";
+            if (empty($_POST['keywords'])) {
+                $params[] = $nameStr;
+            }
 	}
 	if (!empty($_POST['description']) || $_POST['description'] === '0')  {
             if (!empty($_POST['split'])) {
                 $_POST['description'] = preg_replace('/\s+/', '%', $_POST['description']);
             }
-            $params[] = "P.Description like '%" . $mysqli->escape_string($_POST['description']) . "%'";
+            $descStr = "P.Description LIKE '%" . $mysqli->escape_string($_POST['description']) . "%'";
+            if (empty($_POST['keywords']) || empty($nameStr)) {
+                $params[] = $descStr;
+            }
+            else {
+                $params[] = "(" . $nameStr . " OR " . $descStr . ")";
+            }
 	}
 	$lowerBound = $_POST['pricelower'];
 	$upperBound = $_POST['priceupper'];
 	$decimalRegex = "/^\d+(\.\d+)?$/";
 	if (preg_match($decimalRegex, $lowerBound)) {
-		$params[] = "P.Price > " . $lowerBound;
+		$params[] = "P.Price >= " . $lowerBound;
 	}
         if (preg_match($decimalRegex, $upperBound)) {
-		$params[] = "P.Price < " . $upperBound;
+		$params[] = "P.Price <= " . $upperBound;
 	}
 	$select = "SELECT P.Id as PId, P.Name as PName, Inventory, Price, Picture, Description ";
 	$from = "FROM Product as P ";
@@ -36,11 +47,7 @@
 		$params[] = "C.Name LIKE '%" . $mysqli->escape_string($_POST['category']) . "%'";
 	}
 	if (!empty($params)) {
-                $combine = ' AND ';
-                if (!empty($_POST['or'])) {
-                    $combine = ' OR ';
-                }
-		$where = "WHERE " . implode($combine, $params);
+                $where = "WHERE " . implode(' AND ', $params);
 	}
 	$query = $select . $from . $where;
 	$values = $mysqli->query($query);

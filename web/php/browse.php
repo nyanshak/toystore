@@ -46,7 +46,7 @@
 					<input type="text" id="maxPrice" />
 					<span>Keyword Search: </span>
 					<input type="text" id="search" />
-					<button id="searchBtn" class="pure-button">Search</button>
+					<button id="submitBtn" class="pure-button">Submit</button>
 				</div>
 				<br />
 				<table id="products" class="browse"></table>

@@ -14,10 +14,15 @@
 		<nav class="clearfix">
 		<ul class="clearfix">
 			<li><a href="/">Home</a></li>
+			<li><a href="/php/browse.php">Catalog</a></li>
 <?php
 if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 	 ?>
-			<li><a href="/php/account.php">Your Account</a></li>
+			<li><a href="/php/account.php">Account</a></li>
+			<li><a href="/php/OrderHistory.php">Order History</a></li>
+<!-- Please uncomment this after View Cart functionality is implemented
+			<li><a href="/php/viewcart.php">View Cart</a></li>
+-->
 			<li><a href="/php/logout.php">Sign Out</a></li>
  
 	 <?php
@@ -30,7 +35,6 @@ if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 	<?php
 }
 ?>
-			<li><a href="/php/browse.php">Browse Toys</a></li>
 			</ul>
 			<a href="#" id="pull">Menu</a>
 		</nav>
