@@ -31,6 +31,10 @@
 <div id="MainContent">
 <?php
 
+if(empty($_SESSION["Url"])) {
+	$_SESSION["Url"] = "/";
+}
+
 if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name']) && !empty($_POST['billingaddress']) && !empty($_POST['shippingaddress'])) {
 	$email = $mysqli->escape_string($_POST['email']);
 	$name = $mysqli->escape_string($_POST['name']);
@@ -47,8 +51,19 @@ if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name'
 	} else {
 		$registerquery = $mysqli->query("INSERT INTO User (Email, Name, BillingAddress, ShippingAddress, Password) VALUES('" . $email . "', '" . $name . "', '" . $billingaddress . "', '" . $shippingaddress . "', '" . $password . "')");
 		if($registerquery) {
+			$_SESSION["ShippingAddress"] = $shippingaddress;
+			$_SESSION["BillingAddress"] = $billingaddress;
+			$_SESSION["Email"] = $email;
+			$_SESSION["Name"] = $name;
+			$_SESSION["LoggedIn"] = 1;
+			?>
+			<script>
+				alert("Account successfully created. Redirecting to your previous page");
+				window.location = "<?= $_SESSION_['Url'] ?>";
+			</script>
 			echo "<h1>Success</h1>";
-			echo "<p>Your account was successfully created. Please <a href=\"/index.php\">click here to login</a>.</p>";
+			echo "<p>Your account was successfully created. Please <a href=\"" . $_SESSION['Url'] . "\">click here</a> to return to your previous page.</p>";
+			<?php
 		} else {
 			echo "<h1>Error</h1>";
 			echo "<p>Sorry, your registration failed. Please go back and try again.</p>";	
