@@ -1,13 +1,18 @@
 <!doctype html>
 <html>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
  
-<title>Toy Store Registration</title>
-<link rel="stylesheet" href="/css/styles.css" type="text/css" />
-<link rel="stylesheet" href="/css/navbar.css" type="text/css" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="/js/navbar.js"></script>
-<script src="/js/leftsidebar.js"></script>
+	<title>Toy Store Registration</title>
+	<link rel="stylesheet" href="/css/styles.css" type="text/css" />
+	<link rel="stylesheet" href="/css/navbar.css" type="text/css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="/js/navbar.js"></script>
+	<script src="/js/leftsidebar.js"></script>
+	<script src="/js/zxcvbn-async.js"></script>
+	<script src="/js/password.js"></script>
+	<script src="/js/validateAccount.js"></script>
+
 </head>  
 <body>  
 <div id="Wrap">
@@ -63,7 +68,7 @@ if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name'
 } else {
 	?>
 	 
-	<form method="post" action="" name="registerform" id="registerform" class="myForm">
+	<form method="post" onsubmit="return validateAccountDetails()" name="registerform" id="registerform" class="myForm">
 		<h1>Register
 			<span>Please fill the fields below to register.</span>
 			<span>Already have an account? <a href="/php/login.php">Click here to login</a>.</span>
@@ -92,6 +97,9 @@ if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name'
 			<span>Password</span>
 			<input type="password" name="password" id="password" />
 		</label>
+
+		<span class="weak" id="password-result"></span>
+
 
 		<label>
 			<span>&nbsp;</span>

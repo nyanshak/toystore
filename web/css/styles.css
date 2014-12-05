@@ -103,6 +103,28 @@ a {
 	text-align: center;
 }
 
+.weak, .acceptable, .strong, .very-strong {
+	display: block;
+	text-align: center;
+	font-weight: bold;
+}
+
+.weak {
+	color: #E60000;
+}
+
+.acceptable {
+	color: #FF6600;
+}
+
+.strong {
+	color: #33CCFF;
+}
+
+.very-strong {
+	color: #00CC00;
+}
+
 .myForm h1>span {
     display: block;
     font-size: 11px;
@@ -167,7 +189,7 @@ a {
     width: 70%;
 }
 
-.myForm input[type="submit"] {
+.myForm input[type="submit"], .myForm input[type="button"] {
     background: #FFF;
     border: 1px solid #CCC;
     padding: 10px 25px 10px 25px;

@@ -12,6 +12,9 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="/js/navbar.js"></script>
 		<script src="/js/leftsidebar.js"></script>
+		<script src="/js/zxcvbn-async.js"></script>
+		<script src="/js/password.js"></script>
+		<script src="/js/validateAccount.js"></script>
 	</head>
 
 	<body>
@@ -34,7 +37,7 @@
 <?php
 	if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 		?>
-		<form method="post" action="" name="changeaccount" id="accountform" class="myForm">
+		<form method="post" onsubmit="return validateAccountDetails()" name="changeaccount" id="myForm" class="myForm">
 			<h1>Your Account</h1>
 			<label>
 				<span>Name</span>
@@ -60,10 +63,12 @@
 				<span>Password</span>
 				<input type="password" name="password" id="password" />
 			</label>
+			
+			<span class="weak" id="password-result"></span>
 
 			<label>
 				<span>&nbsp;</span>
-				<input type="submit" name="register" id="register" value="Register" value="<?=$_SESSION['Name'] ?>" />
+				<input type="submit" id="submit" value="Change Account Details" />
 			</label>
 		</form>
 		<?php
