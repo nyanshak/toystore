@@ -36,7 +36,54 @@
 
 <?php
 	if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
-		?>
+
+		if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name']) && !empty($_POST['billingaddress']) && !empty($_POST['shippingaddress'])) {
+			$email = $mysqli->escape_string($_POST['email']);
+			$name = $mysqli->escape_string($_POST['name']);
+			$billingaddress = $mysqli->escape_string($_POST['billingaddress']);
+			$shippingaddress = $mysqli->escape_string($_POST['shippingaddress']);
+			$password = password_hash($mysqli->escape_string($_POST['password']), PASSWORD_DEFAULT);
+
+
+			$changeAccount = true;
+			$changeEmail = true;
+
+			if ($email === $_SESSION['Email']) {
+				$changeEmail = false;
+			}
+
+
+			if ($changeEmail) {
+				$checkemail = $mysqli->query("SELECT * FROM User WHERE Email = '" . $email . "'");
+
+				if(!$checkemail || $checkemail->num_rows >= 1) {
+					echo "<h1>Error</h1>";
+					echo "<p>Sorry, there is already a user under that email address. Please go back and try again.</p>";
+					$changeAccount = false;
+				}
+			}
+
+			if ($changeAccount) {
+					$accountChangeQuery = $mysqli->query("UPDATE User SET Email='" . $email . "', Name='" . $name . "', BillingAddress='" . $billingaddress . "', ShippingAddress='" . $shippingaddress . "', Password='" . $password . "' WHERE Email='" . $_SESSION['Email'] . "'");
+					if($accountChangeQuery) {
+						$_SESSION["ShippingAddress"] = $shippingaddress;
+						$_SESSION["BillingAddress"] = $billingaddress;
+						$_SESSION["Email"] = $email;
+						$_SESSION["Name"] = $name;
+						$_SESSION["LoggedIn"] = 1;
+?>
+				<h1>Success</h1>
+				<p>Your account was successfully modified. Please <a href="/php/account.php">click here</a> to review your account details.</p>
+<?php
+					} else {
+						echo "<h1>Error</h1>";
+						echo "<p>Sorry, an error occurred while changing your account details. Please go back and try again.</p>";
+					}
+			}
+
+
+		} else {
+?>
 		<form method="post" onsubmit="return validateAccountDetails()" name="changeaccount" id="myForm" class="myForm">
 			<h1>Your Account</h1>
 			<label>
@@ -71,7 +118,8 @@
 				<input type="submit" id="submit" value="Change Account Details" />
 			</label>
 		</form>
-		<?php
+<?php
+		}
 	} else {
 		?>
 		<h1>Error</h1>
