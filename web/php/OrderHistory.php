@@ -14,7 +14,7 @@
 		
 		<div id="Wrap">
 		 
-			<?php
+<?php
 			$_SESSION["Url"] = $_SERVER["REQUEST_URI"];
 			define('INCL_HEADER_CONST', TRUE);
 			ob_start();
@@ -26,12 +26,12 @@
 			include ('base.php');
 	   
 		unset($params);
-		?>
+?>
 		<div id="LeftSidebar">
 
 		</div> <!-- end "LeftSidebar" -->
 		<div id="MainContent">
-		<?php
+<?php
 		if (!empty($_SESSION['Email'])) {
 			$email = $_SESSION['Email'];
 			
@@ -83,21 +83,24 @@
 					}
 					echo '</table>';
 				}
+				echo '</table>';
 			} else {
-				echo "</head>\n<body>\n<div id=\"main\"";
-				echo "<h1>No Orders Found</h1>";
-				echo "<p>Sorry, you do not have any existing orders with us. Please <a href=\"/php/products.php\">click here to look at our catalog</a>.</p>";
+?>
+		<form class="myForm" onsubmit="">
+			<h1>No Orders Found</h1>
+			<span>Sorry, you do not have any existing orders with us. Please <a href="/">click here to look at our catalog</a>.</span>
+		</form>
+<?php
 			}
 			
-			echo '</table>';
 		} else {
 			echo "</head>\n<body>\n<div id=\"main\"";
 			echo "<h1>Error</h1>";
 			echo "<p> Please <a href=\"/php/login.php\">click here to sign in</a>.</p>";
 		}?>
 		
-		</div>
-		</div>
+		</div> <!-- End MainContent -->
+		</div> <!-- End Wrap -->
 	</body>
 </html>
 	

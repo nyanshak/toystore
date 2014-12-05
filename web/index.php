@@ -27,15 +27,7 @@
 			<div id="MainContent">
 				<br />
 				<div id="browse" class="pure-form">
-					<span id="selectDefault" class="hide">
-						<?php
-							if (!empty($_GET["category"])) {
-								echo $_GET["category"];
-							} else {
-								echo 'New';
-							}
-						?>
-					</span>
+					<span id="selectDefault" class="hide"><?= !empty(trim($_GET["category"])) ? trim($_GET["category"]) : "New" ?></span>
 					<span>Category: </span>
 					<select id="catfilter">
 						<option></option>
