@@ -13,8 +13,7 @@
 ?>
 		<nav class="clearfix">
 		<ul class="clearfix">
-			<li><a href="/">Home</a></li>
-			<li><a href="/php/browse.php">Catalog</a></li>
+			<li><a href="/">Catalog</a></li>
 <?php
 if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 	 ?>
