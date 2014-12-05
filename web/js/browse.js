@@ -32,21 +32,21 @@ function catsReady() {
     getProducts({category: selectDefault});
     $categories.change(function() {
         getProducts({
-            category: $("#catfilter option:selected").text(),
+            category: $("#catfilter option:selected").val(),
             pricelower: $minPrice.val(),
             priceupper: $maxPrice.val()
         });
     });
     $minPrice.change(function() {
         getProducts({
-            category: $("#catfilter option:selected").text(),
+            category: $("#catfilter option:selected").val(),
             pricelower: $minPrice.val(),
             priceupper: $maxPrice.val()
         });
     });
     $maxPrice.change(function() {
         getProducts({
-            category: $("#catfilter option:selected").text(),
+            category: $("#catfilter option:selected").val(),
             pricelower: $minPrice.val(),
             priceupper: $maxPrice.val()
         });
@@ -61,7 +61,6 @@ function catsReady() {
             split: true 
         });
     });
-    $categories.val(selectDefault);
 }
 
 function getProducts(data) {

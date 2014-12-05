@@ -30,21 +30,17 @@
 	}
 	$select = "SELECT P.Id as PId, P.Name as PName, Inventory, Price, Picture, Description ";
 	$from = "FROM Product as P ";
-	unset($where);
 	if (!empty($_POST['category'])) {
 		$select .= ", C.Name as CName ";
 		$from .= "JOIN ProductToCategory as PTC ON P.Id = PTC.ProductId JOIN Category as C ON PTC.CategoryId = C.Id ";
-		$where = "WHERE C.Name LIKE '%" . $mysqli->escape_string($_POST['category']) . "%'";
+		$params[] = "C.Name LIKE '%" . $mysqli->escape_string($_POST['category']) . "%'";
 	}
 	if (!empty($params)) {
-		if (empty($where)) {
-			$where = "WHERE ";
-		}
                 $combine = ' AND ';
                 if (!empty($_POST['or'])) {
                     $combine = ' OR ';
                 }
-		$where .= implode($combine, $params);
+		$where = "WHERE " . implode($combine, $params);
 	}
 	$query = $select . $from . $where;
 	$values = $mysqli->query($query);

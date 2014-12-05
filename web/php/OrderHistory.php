@@ -21,7 +21,6 @@
 			include('header.php');
 			$result = ob_get_clean();
 			echo $result;
-			header('Content-Type: application/json');
 
 			define('INCL_BASE_CONST', true);
 			include ('base.php');
@@ -32,7 +31,7 @@
 
 		</div> <!-- end "LeftSidebar" -->
 		<div id="MainContent">
-		<?
+		<?php
 		if (!empty($_SESSION['Email'])) {
 			$email = $_SESSION['Email'];
 			
@@ -87,7 +86,7 @@
 			} else {
 				echo "</head>\n<body>\n<div id=\"main\"";
 				echo "<h1>No Orders Found</h1>";
-				echo "<p>Sorry, you do not have any existing orders with us. Please <a href=\"/php/products.php\">Click here to look at our catalog</a>.</p>";
+				echo "<p>Sorry, you do not have any existing orders with us. Please <a href=\"/php/products.php\">click here to look at our catalog</a>.</p>";
 			}
 			
 			echo '</table>';
