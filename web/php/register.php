@@ -83,7 +83,7 @@ if(!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['name'
 } else {
 	?>
 	 
-	<form method="post" onsubmit="return validateAccountDetails()" name="registerform" id="registerform" class="myForm">
+	<form method="post" onsubmit="return validateNewAccountDetails()" name="registerform" id="registerform" class="myForm">
 		<h1>Register
 			<span>Please fill the fields below to register.</span>
 			<span>Already have an account? <a href="/php/login.php">Click here to login</a>.</span>
