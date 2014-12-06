@@ -8,6 +8,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="/js/navbar.js"></script>
 		<script src="/js/leftsidebar.js"></script>
+		
 	</head>
 
 	<body>
@@ -40,27 +41,29 @@
 		 
 			$userid = $userArray['Id'];
 			$qty = $_POST['qty'];
-		 
-			
+			$orderId = $_POST['orderId'];
+			$productId = $_POST['productId'];
 			$row = $mysqli->query("SELECT `Price`,`Inventory` FROM `Product` WHERE `Id` = " . $ProductId );
 			$rowdetail = mysqli_fetch_row($row);
 			$inventory = $rowdetail['Inventory'];
-			$updated_inventory = $inventory - $qty;
 			$price = $rowdetail['Price'];
-			$checkOrder = $mysqli->query("SELECT `Quantity`,`ProductId` FROM `OrderItem` WHERE `OrderId`=" . $orderId);
-			while ($itemArray = mysqli_fetch_array($checkOrder)) {
-				$productId = $itemArray['ProductId'];
-				echo $productId;
-				$updateQuery = $mysqli->query("UPDATE `Product` SET `Inventory` ='" . $updated_inventory . "' WHERE `ProductId`='" .$productId . "'");
+			if ($qty > $inventory) {
+				echo "<p>We only have ". $inventory . " items. Please enter a smaller value.</p>"; 
+			} else {
+				$total = $price * $qty;
+				
+				 $updateQuery = $mysqli->query("Update `OrderItem` set `Quantity` =" . $qty . "' WHERE` OrderId`='" . $orderId . "'");
+					
+				 echo "<p>Quantity Updated</p>";
 			}
-			$date = date_create()->format('Y-m-d');
-			$updateQuery= $mysqli->query("UPDATE `Order` SET `Status`='Confirmed', `OrderDate`='" . $date . "' WHERE `Id`='" . $orderId . "'");
 			
-			//echo $date; echo $orderId;
-			
-			echo "<p>Your order has been placed. Please go to <a href=\"/php/OrderHistory.php\">My Orders</a> to view all your orders</p>";
+		} else {
+			echo "</head>\n<body>\n<div id=\"main\"";
+			echo "<h1>Error</h1>";
+			echo "<p> Please <a href=\"/php/login.php\">click here to sign in</a>.</p>";
 		}
-		?>
+?>
+		
 		</div> <!-- End MainContent -->
 		</div> <!-- End Wrap -->
 	</body>
@@ -68,5 +71,4 @@
 	
 
 
-						
-		 
+
