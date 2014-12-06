@@ -49,6 +49,7 @@
 			while($order = mysqli_fetch_array($checkOrder)) {
 				$orderId = $order['Id'];
 					
+				echo '<p>Total: $' . $order['Total'] . '</p>';	
 				echo '<table class="order">';
 				echo '<tr class="border">';
 				echo "<td>Name<br/></td>";
