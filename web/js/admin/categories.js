@@ -15,6 +15,10 @@ function fillLeftSidebar() {
 
 				var content = "<h1 class=\"myForm\">Edit Categories</h1>";
 				
+				content += "<form method=\"post\" name=\"changeCategory\" class=\"myForm\">";
+				content += "<label><input type=\"text\" name=\"name\" value=\"New Category\" /></label>";
+				content += "<label><input type=\"submit\" value=\"Add New Category\" /></label>";
+				content += "</form>";
 				for (var i = 0; i < data.categories.length; i++) {
 					var current = data.categories[i];
 					content += "<form method=\"post\" name=\"changeCategory\" id=\"" + current.Id + "\" + class=\"myForm\">";

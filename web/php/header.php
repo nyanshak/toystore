@@ -18,10 +18,8 @@
 if (!empty($_SESSION['LoggedIn']) && !empty($_SESSION['Email'])) {
 	 ?>
 			<li><a href="/php/account.php">Account</a></li>
+			<li><a href="/php/ViewCart.php">View Cart</a></li>
 			<li><a href="/php/OrderHistory.php">Order History</a></li>
-<!-- Please uncomment this after View Cart functionality is implemented
-			<li><a href="/php/viewcart.php">View Cart</a></li>
--->
 			<li><a href="/php/logout.php">Sign Out</a></li>
  
 	 <?php

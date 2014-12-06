@@ -74,6 +74,10 @@ a {
     *zoom: 1;
 }
 
+#itemQuantity {
+	text-align: right;
+}
+
 /* ##### "Bootstrap" style form ##### */
 /* Credit: http://www.sanwebe.com/2013/10/css-html-form-styles */
 
