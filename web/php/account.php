@@ -64,21 +64,21 @@
 			}
 
 			if ($changeAccount) {
-					$accountChangeQuery = $mysqli->query("UPDATE User SET Email='" . $email . "', Name='" . $name . "', BillingAddress='" . $billingaddress . "', ShippingAddress='" . $shippingaddress . "', Password='" . $password . "' WHERE Email='" . $_SESSION['Email'] . "'");
-					if($accountChangeQuery) {
-						$_SESSION["ShippingAddress"] = $shippingaddress;
-						$_SESSION["BillingAddress"] = $billingaddress;
-						$_SESSION["Email"] = $email;
-						$_SESSION["Name"] = $name;
-						$_SESSION["LoggedIn"] = 1;
+				$accountChangeQuery = $mysqli->query("UPDATE User SET Email='" . $email . "', Name='" . $name . "', BillingAddress='" . $billingaddress . "', ShippingAddress='" . $shippingaddress . "', Password='" . $password . "' WHERE Email='" . $_SESSION['Email'] . "'");
+				if($accountChangeQuery) {
+					$_SESSION["ShippingAddress"] = $shippingaddress;
+					$_SESSION["BillingAddress"] = $billingaddress;
+					$_SESSION["Email"] = $email;
+					$_SESSION["Name"] = $name;
+					$_SESSION["LoggedIn"] = 1;
 ?>
 				<h1>Success</h1>
 				<p>Your account was successfully modified. Please <a href="/php/account.php">click here</a> to review your account details.</p>
 <?php
-					} else {
-						echo "<h1>Error</h1>";
-						echo "<p>Sorry, an error occurred while changing your account details. Please go back and try again.</p>";
-					}
+				} else {
+					echo "<h1>Error</h1>";
+					echo "<p>Sorry, an error occurred while changing your account details. Please go back and try again.</p>";
+				}
 			}
 
 
