@@ -18,13 +18,13 @@ $(function() {
 
 			result = "";
 			// Entropy used to determine password strength 
-			if (entropy < 30) { // too weak
+			if (entropy < 25) { // too weak
 				result = "Password Strength: " + entropy + " (Too Weak)";
 				$('#password-result').attr('class', 'weak');
-			} else if (entropy < 40) { // acceptable
+			} else if (entropy < 35) { // acceptable
 				result = "Password Strength: " + entropy + " (Acceptable)";
 				$('#password-result').attr('class', 'acceptable');
-			} else if (entropy < 45) { // strong
+			} else if (entropy < 40) { // strong
 				result = "Password Strength: " + entropy + " (Strong)";
 				$('#password-result').attr('class', 'strong');
 			} else { // very strong

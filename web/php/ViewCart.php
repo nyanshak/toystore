@@ -87,16 +87,22 @@
 					echo '</table>';
 				}
 			} else {
-				echo "</head>\n<body>\n<div id=\"main\"";
-				echo "<h1>Empty Cart</h1>";
-				echo "<p>Sorry, There are no items in your cart. Please <a href=\"/\">Click here to look at our catalog</a>.</p>";
+?>
+	<form class="myForm">
+		<h1>Empty Cart</h1>
+		<p>Sorry, There are no items in your cart. Please <a href="/">Click here to look at our catalog</a>.</p>
+	</form>
+<?php
 			}
 			
 			echo '</table>';
 		} else {
-			echo "</head>\n<body>\n<div id=\"main\"";
-			echo "<h1>Error</h1>";
-			echo "<p> Please <a href=\"/php/login.php\">click here to sign in</a>.</p>";
+?>
+	<form class="myForm">
+			<h1>Error</h1>";
+			<p> Please <a href="/php/login.php">click here to sign in</a>.</p>
+	</form>
+<?php
 		}
 ?>
 		
