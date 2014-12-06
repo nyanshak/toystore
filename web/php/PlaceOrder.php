@@ -33,7 +33,7 @@ $email = $_SESSION['Email'];
 $userResults = $mysqli->query("SELECT `Id` FROM `User` WHERE `Email` = '" . $email . "'");
 $userArray = mysqli_fetch_array($userResults);
 $userid = $userArray['Id'];
-$checkOrder = $mysqli->query("SELECT * FROM `Order` WHERE `UserId` = " . $userid);
+$checkOrder = $mysqli->query("SELECT * FROM `Order` WHERE `UserId` = " . $userid . " AND `Status` = 'Pending'");
 $orderArray=mysqli_fetch_array($checkOrder);
 $orderId=$orderArray['Id'];
 
@@ -63,7 +63,7 @@ $updateOrder= $mysqli->query("UPDATE `Order` SET `Status`='Confirmed', `Total`= 
     echo "<p>Your order has been placed. Please go to <a href=\"/php/OrderHistory.php\">My Orders</a> to view all your orders</p>";
 }
 } else {
-    echo "Error updating record: " . $conn->error;
+    echo "<p>Error updating record: " . $conn->error . "</p>";
 }  
 
 

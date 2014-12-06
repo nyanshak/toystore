@@ -19,22 +19,22 @@ if (!empty($_SESSION['Email'])) {
 	$productId = $_POST['productId'];
 	$row = $mysqli->query("SELECT `Price`,`Inventory` FROM `Product` WHERE `Id` = '" . $productId . "'");
 
-	if ($row) {
+	if ($row->num_rows > 0) {
 		$rowdetail = mysqli_fetch_array($row);
 		$inventory = $rowdetail['Inventory'];
 		$price = $rowdetail['Price'];
 	} else {
 		$data["success"] = false;
 		$data["reply"] = "Update Failed. Something went wrong";
+		die(json_encode($data));
 	}
 
 	if ($qty > $inventory) {
 		$data["reply"] = "We only have " . $inventory . " items. Please enter a smaller value.";
 	} else {
-		$total = $price * $qty;
-		$updateQuery = $mysqli->query("Update `OrderItem` set `Quantity` =" . $qty . " WHERE `OrderId`='" . $orderId . "'");
-		$updateTotal = $mysqli->query("Update `Order` set `Total` =" . $total . " WHERE `Id`='" . $orderId . "'");
-		if (($updateQuery) && ($updateTotal)) {
+		$myQuery = "Update `OrderItem` set `Quantity` =" . $qty . " WHERE `OrderId`='" . $orderId . "' AND `ProductId` = '" . $productId . "'";
+		$updateQuery = $mysqli->query($myQuery);
+		if ($updateQuery) {
 			$data["success"] = true;
 			$data["reply"] = "Quantity Updated";
 		} else {

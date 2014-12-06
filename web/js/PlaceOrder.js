@@ -17,8 +17,8 @@ $(document).ready(function() {
 					orderId: $order,
 					qty: $quant,
 					productId: $productId,
-					type: "post"
 				},
+				type: "post",
 				dataType: "json",
 				success: function(data) {
 					console.log(data);
