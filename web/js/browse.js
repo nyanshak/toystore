@@ -91,7 +91,7 @@ function getProducts(data) {
                 $products.append('<tr class="border"><td class="hide">Category</td><td>Product</td><td>Description</td><td>Price</td><td>Inventory</td><td>Add to Cart</td></tr>');
                 var products = data["products"];
                 $.each(products, function(i, product) {
-                    $products.append('<tr><td class="hide">' + product.Id + '</td><td class="hide">' + product.Category + "</td><td><img src=" + product.Picture + " alt='Product Picture' /><br />" + product.Name + "</td><td>" 
+                    $products.append('<tr><td class="hide">' + product.Id + '</td><td class="hide">' + product.Category + "</td><td><img src=" + product.Picture + " alt='Product Picture' /></br>" + product.Name + "</td><td>" 
                             + product.Description + "</td><td>$" + product.Price + "</td><td>Qty: " + product.Inventory + '</td><td><button class="cartAdd">Add to Cart</button></td></tr>');
                 });
                 $(".hide").hide();

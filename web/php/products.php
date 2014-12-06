@@ -3,32 +3,32 @@
 	define('INCL_BASE_CONST', true);
 	include 'base.php';
 	unset($params);
-        unset($nameStr);
-        unset($descStr);
+		unset($nameStr);
+		unset($descStr);
 	$_POST = array_map('trim', $_POST);
 	if (!empty($_POST['pid']) || $_POST['id'] === '0') {
 		$params[] = "P.Id = '" . $mysqli->escape_string($_POST['pid']) . "'";
 	}
 	if (!empty($_POST['name']) || $_POST['name'] === '0') {
-            if (!empty($_POST['split'])) {
-                $_POST['name'] = preg_replace('/\s+/', '%', $_POST['name']);
-            }
-            $nameStr = "P.Name LIKE '%" . $mysqli->escape_string($_POST['name']) . "%'";
-            if (empty($_POST['keywords'])) {
-                $params[] = $nameStr;
-            }
+			if (!empty($_POST['split'])) {
+				$_POST['name'] = preg_replace('/\s+/', '%', $_POST['name']);
+			}
+			$nameStr = "P.Name LIKE '%" . $mysqli->escape_string($_POST['name']) . "%'";
+			if (empty($_POST['keywords'])) {
+				$params[] = $nameStr;
+			}
 	}
 	if (!empty($_POST['description']) || $_POST['description'] === '0')  {
-            if (!empty($_POST['split'])) {
-                $_POST['description'] = preg_replace('/\s+/', '%', $_POST['description']);
-            }
-            $descStr = "P.Description LIKE '%" . $mysqli->escape_string($_POST['description']) . "%'";
-            if (empty($_POST['keywords']) || empty($nameStr)) {
-                $params[] = $descStr;
-            }
-            else {
-                $params[] = "(" . $nameStr . " OR " . $descStr . ")";
-            }
+			if (!empty($_POST['split'])) {
+				$_POST['description'] = preg_replace('/\s+/', '%', $_POST['description']);
+			}
+			$descStr = "P.Description LIKE '%" . $mysqli->escape_string($_POST['description']) . "%'";
+			if (empty($_POST['keywords']) || empty($nameStr)) {
+				$params[] = $descStr;
+			}
+			else {
+				$params[] = "(" . $nameStr . " OR " . $descStr . ")";
+			}
 	}
 	$lowerBound = $_POST['pricelower'];
 	$upperBound = $_POST['priceupper'];
@@ -36,7 +36,7 @@
 	if (preg_match($decimalRegex, $lowerBound)) {
 		$params[] = "P.Price >= " . $lowerBound;
 	}
-        if (preg_match($decimalRegex, $upperBound)) {
+		if (preg_match($decimalRegex, $upperBound)) {
 		$params[] = "P.Price <= " . $upperBound;
 	}
 	$select = "SELECT P.Id as PId, P.Name as PName, Inventory, Price, Picture, Description ";
@@ -47,7 +47,7 @@
 		$params[] = "C.Name LIKE '%" . $mysqli->escape_string($_POST['category']) . "%'";
 	}
 	if (!empty($params)) {
-                $where = "WHERE " . implode(' AND ', $params);
+		$where = "WHERE " . implode(' AND ', $params);
 	}
 	$query = $select . $from . $where;
 	$values = $mysqli->query($query);
@@ -63,7 +63,10 @@
 				$products[$i]["Price"] = $row["Price"];
 				$products[$i]["Inventory"] = $row["Inventory"];
 				$products[$i]["Picture"] = $row["Picture"];
-				$products[$i]["Category"] = $row["CName"];
+
+				if (!empty($_POST['category'])) {
+					$products[$i]["Category"] = $row["CName"];
+				}
 				$val = $i;
 				$foundArr[$id] = $val;
 				$i++;

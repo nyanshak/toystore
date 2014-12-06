@@ -155,7 +155,7 @@ a {
     font-weight: bold;
 }
 
-.myForm input[type="text"], .myForm input[type="email"], .myForm input[type="password"], .myForm textarea, .myForm select {
+.myForm input[type="text"], .myForm input[type="email"], .myForm input[type="password"], .myForm input[type="url"], .myForm input[type="number"], .myForm textarea, .myForm select {
     border: 1px solid #CCC;
     color: #888;
     height: 20px;
@@ -210,6 +210,8 @@ a {
 img {
     width: 40%;
     height: 30%;
+	max-height: 100px;
+	max-width: 100px;
 }
 
 .order {
